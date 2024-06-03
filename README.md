@@ -47,3 +47,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - [ ]
 - [ ]
 - [ ]
+
+Form should be:
+
+Name - text field
+Date of Birth - number fields
+Email Address = text field
+Donation - number field with £ sign
+Accept Privacy Policy - Accordion and Checkbox
+
+Submit button
