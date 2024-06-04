@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { TextField, Accordion, Button, Grid, Box, Typography, AccordionSummary, AccordionDetails, Checkbox, FormControlLabel } from "@mui/material";
+import { postDonation } from "@/server/queries";
 
 interface formDataProps {
   username?: string;
@@ -21,17 +22,29 @@ export default function Form() {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, type, value, checked } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
-  const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const formSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+
+    const requiredFields: (keyof formDataProps)[] = ["username", "DOB", "email", "donation", "privacyPolicy"]
+    
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        console.log(`No ${String(field)} in form`);
+        return;
+      }
+    }
+
+    await postDonation(formData);
   };
+
   return (
     <Box component="form" onSubmit={formSubmitHandler}>
       <Typography variant="h4" component="h1" gutterBottom>
@@ -101,7 +114,8 @@ export default function Form() {
                 control={
                     <Checkbox
                         aria-label="I agree to the Privacy Policy"
-                        value={formData.privacyPolicy}
+                        name="privacyPolicy"
+                        checked={formData.privacyPolicy}
                         onChange={handleChange}
                     />
                 }
