@@ -20,7 +20,7 @@ export default function Form() {
     privacyPolicy: null,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
