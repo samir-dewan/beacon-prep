@@ -5,11 +5,11 @@ import { TextField, Accordion, Button, Grid, Box, Typography, AccordionSummary, 
 import { postDonation } from "@/server/queries";
 
 interface formDataProps {
-  username?: string;
-  DOB?: Date;
-  email?: string;
-  donation?: number;
-  privacyPolicy?: boolean | null;
+  username: string;
+  DOB: Date;
+  email: string;
+  donation: number;
+  privacyPolicy: boolean;
 }
 
 export default function Form() {
@@ -18,7 +18,7 @@ export default function Form() {
     DOB: new Date(),
     email: "",
     donation: 0,
-    privacyPolicy: null,
+    privacyPolicy: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
