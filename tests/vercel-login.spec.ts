@@ -1,8 +1,9 @@
 import { test, expect } from "@playwright/test";
 
 test("Going to homepage", async ({ page, context }) => {
+
   const vercelTitle = "Login – Vercel";
-  const username = "samir-dewan";
+  const username = process.env.VERCEL_GITHUB_USERNAME;
   const password = process.env.VERCEL_GITHUB_PASSWORD;
 
   await page.goto(
@@ -15,7 +16,7 @@ test("Going to homepage", async ({ page, context }) => {
 
   await newPage.waitForLoadState();
 
-  await newPage.fill('input[name="login"]', username!);
+  await newPage.fill('input[name="login"]', "samir-dewan");
   await newPage.fill('input[name="password"]', password!);
   await newPage.click('input[name="commit"]');
 

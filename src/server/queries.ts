@@ -1,4 +1,5 @@
 "use server";
+
 import { db } from "./db";
 import { donations } from "./db/schema";
 
@@ -8,6 +9,15 @@ interface donationObj {
     DOB: Date,
     donation: number,
     privacyPolicy: boolean
+}
+
+export async function getDonations() {
+
+    const donations = await db.query.donations.findFirst();
+
+    console.log("donations found: ", donations);
+
+    return donations;
 }
 
 export async function postDonation(donation: donationObj ) {
