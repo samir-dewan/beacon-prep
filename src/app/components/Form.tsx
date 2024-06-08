@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { TextField, Accordion, Button, Grid, Box, Typography, AccordionSummary, AccordionDetails, Checkbox, FormControlLabel } from "@mui/material";
+import { postDonation } from "@/server/queries";
 
 interface formDataProps {
   username: string;
@@ -37,6 +38,8 @@ export default function Form() {
         return;
       }
     }
+
+    await postDonation(formData);
   }
 
   return (
@@ -91,7 +94,6 @@ export default function Form() {
                     These are the details of the privacy policy that you will agree to if you check below.
                 </AccordionDetails>
             </Accordion>
-
             <FormControlLabel
                 control={
                     <Checkbox
