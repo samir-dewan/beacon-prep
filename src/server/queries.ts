@@ -6,7 +6,6 @@ import { donations } from "./db/schema";
 interface donationObj {
     username: string,
     email: string,
-    DOB: string,
     donation: number,
     privacyPolicy: boolean
 }

@@ -1,12 +1,12 @@
+"use server";
+
 import { NextApiRequest, NextApiResponse } from "next";
-import { db } from "@/server/db";
-import { postDonation } from "@/server/queries";
-import { donations } from "@/server/db/schema";
+import { getDonations, postDonation } from "@/server/queries";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == "GET") {
         try {
-            const donationRecords = await db.query.donations.findFirst();
+            const donationRecords = await getDonations();
             res.status(200).json({ success: true, data: donationRecords});
         } catch (error) {
             res.status(400).json({ success: false, message: 'Internal Server Error'});
@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     else if (req.method === "POST") {
         try {
             console.log("posting in handler");
-            const postingDonation = await db.insert(donations).values(req.body);
+            const postingDonation = await postDonation(req.body);
             res.status(201).json({success: true, message: req.body, data: postingDonation});
         } catch (error) {
             res.status(401).json({success: false, message: `error posting ${req.body} to database`});
