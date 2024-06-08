@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { TextField, Accordion, Button, Grid, Box, Typography, AccordionSummary, AccordionDetails, Checkbox, FormControlLabel } from "@mui/material";
-import { postDonation } from "@/server/queries";
 
 interface formDataProps {
   username: string;
@@ -38,8 +37,6 @@ export default function Form() {
         return;
       }
     }
-
-    await postDonation(formData);
   }
 
   return (
