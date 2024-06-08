@@ -31,7 +31,6 @@ export default function Form() {
 
   const formSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
 
     const requiredFields: (keyof formDataProps)[] = ["username", "DOB", "email", "donation", "privacyPolicy"]
     

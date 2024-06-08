@@ -20,6 +20,7 @@ export const donations = pgTable(
       email: text('email').notNull(),
       donation: integer('donation').notNull(),
       privacyPolicy: boolean('agreedPrivacyPolicy').notNull(),
+      DOB: text('DOB').notNull(),
       createdAt: timestamp('createdAt').defaultNow().notNull(),
     },
     (example) => {
