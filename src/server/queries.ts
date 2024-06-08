@@ -19,7 +19,7 @@ export async function getDonations() {
 
 export async function postDonation(donation: donationObj ) {
 
-    await db.insert(donations).values(donation);
+    await db.insert(donations).values(donation).execute();
 
     return donations;
 }
