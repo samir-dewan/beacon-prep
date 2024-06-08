@@ -15,7 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     else if (req.method === "POST") {
         try {
-            console.log("posting in handler");
             const postingDonation = await postDonation(req.body);
             res.status(201).json({success: true, message: req.body, data: postingDonation});
         } catch (error) {
