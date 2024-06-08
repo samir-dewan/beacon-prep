@@ -6,7 +6,6 @@ import { postDonation } from "@/server/queries";
 
 interface formDataProps {
   username: string;
-  DOB: Date;
   email: string;
   donation: number;
   privacyPolicy: boolean;
@@ -15,7 +14,6 @@ interface formDataProps {
 export default function Form() {
   const [formData, setFormData] = useState<formDataProps>({
     username: "",
-    DOB: new Date(),
     email: "",
     donation: 0,
     privacyPolicy: false,
@@ -31,9 +29,8 @@ export default function Form() {
 
   const formSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
 
-    const requiredFields: (keyof formDataProps)[] = ["username", "DOB", "email", "donation", "privacyPolicy"]
+    const requiredFields: (keyof formDataProps)[] = ["username", "email", "donation", "privacyPolicy"]
     
     for (const field of requiredFields) {
       if (!formData[field]) {
@@ -43,7 +40,7 @@ export default function Form() {
     }
 
     await postDonation(formData);
-  };
+  }
 
   return (
     <Box component="form" onSubmit={formSubmitHandler}>
@@ -58,18 +55,6 @@ export default function Form() {
             label="Full Name"
             name="username"
             value={formData.username}
-            onChange={handleChange}
-            variant="outlined"
-            required
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            id="DOB"
-            label="DOB"
-            name="DOB"
-            value={formData.DOB}
             onChange={handleChange}
             variant="outlined"
             required
@@ -109,7 +94,6 @@ export default function Form() {
                     These are the details of the privacy policy that you will agree to if you check below.
                 </AccordionDetails>
             </Accordion>
-
             <FormControlLabel
                 control={
                     <Checkbox

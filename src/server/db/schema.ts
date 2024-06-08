@@ -11,7 +11,6 @@ import {
 
 export const createTable = pgTableCreator((name) => `beaconprep_${name}`);
 
-// Create a pgTable that maps to a table in your DB
 export const donations = pgTable(
     'donations',
     {

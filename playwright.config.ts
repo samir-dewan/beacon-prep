@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
-  grep: [/unit/, /form-filling/, /vercel-login/],
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
