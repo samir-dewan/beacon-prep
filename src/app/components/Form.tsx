@@ -1,13 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { TextField, Accordion, Button, Grid, Box, Typography, AccordionSummary, AccordionDetails, Checkbox, FormControlLabel } from "@mui/material";
+import { TextField, Accordion, Button, Grid, Box, Typography, FormHelperText, AccordionSummary, FormControl, AccordionDetails, Checkbox, FormControlLabel, InputAdornment } from "@mui/material";
 import { postDonation } from "@/server/queries";
 
 interface formDataProps {
   username: string;
   email: string;
   donation: number;
+  privacyPolicy: boolean;
+}
+
+interface formTouchProps {
+  username: boolean;
+  email: boolean;
+  donation: boolean;
   privacyPolicy: boolean;
 }
 
@@ -19,6 +26,23 @@ export default function Form() {
     privacyPolicy: false,
   });
 
+  const [touched, setTouched] = useState<formTouchProps>({
+    username: false,
+    email: false,
+    donation: false,
+    privacyPolicy: false
+  });
+
+  const [emailValid, setEmailValid] = useState<boolean>(false)
+
+  const [validPost, setValidPost] = useState<boolean>(true);
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const handleValidateEmailRegex = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    emailPattern.test(e.target.value) ? setEmailValid(true) : setEmailValid(false)
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, type, value, checked } = e.target;
     setFormData((prevFormData) => ({
@@ -26,6 +50,14 @@ export default function Form() {
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const {name} = e.target;
+    setTouched({
+      ...touched,
+      [name]: true
+    })
+  }
 
   const formSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,9 +67,12 @@ export default function Form() {
     for (const field of requiredFields) {
       if (!formData[field]) {
         console.log(`No ${String(field)} in form`);
+        setValidPost(false);
         return;
       }
     }
+
+    setValidPost(true);
 
     await postDonation(formData);
   }
@@ -51,38 +86,49 @@ export default function Form() {
         <Grid item xs={12}>
           <TextField
             fullWidth
+            error = {(touched.username || !validPost) && formData.username.length < 3}
+            helperText={(touched.username || !validPost) && formData.username.length < 3 && "Please write more than two characters for your name."}
             id="username"
-            label="Full Name"
+            label="Name"
             name="username"
             value={formData.username}
             onChange={handleChange}
+            onBlur={handleBlur}
             variant="outlined"
-            required
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
+            error={(touched.email || !validPost) && !emailValid}
+            helperText = {(touched.email || !validPost) && !emailValid && "Please enter a valid email address."}
             id="email"
             label="Email Address"
             name="email"
             value={formData.email}
-            onChange={handleChange}
+            onChange={(e) => 
+              {handleChange(e)
+              handleValidateEmailRegex(e)}}
+            onBlur={handleBlur}
             variant="outlined"
-            required
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
+        <TextField
             fullWidth
-            type="number"
+            InputProps={{
+              startAdornment: <InputAdornment position="start">£</InputAdornment>
+            }}
+            error={(touched.donation || !validPost) && formData.donation <= 0}
+            helperText={(touched.donation || !validPost) && formData.donation <= 0 && "Please enter a positive donation amount."}
             id="donation"
             label="Donation"
             name="donation"
             value={formData.donation}
             onChange={handleChange}
+            onBlur={handleBlur}
             variant="outlined"
-            required
+            type="number"
           />
         </Grid>
         <Grid item xs={12}>
@@ -95,17 +141,18 @@ export default function Form() {
                 </AccordionDetails>
             </Accordion>
             <FormControlLabel
-                control={
-                    <Checkbox
-                        aria-label="I agree to the Privacy Policy"
-                        name="privacyPolicy"
-                        checked={formData.privacyPolicy}
-                        onChange={handleChange}
-                    />
-                }
-                label="I agree to the Privacy Policy."
+              required
+              control={
+                <Checkbox
+                  aria-label="I agree to the Privacy Policy"
+                  name="privacyPolicy"
+                  checked={formData.privacyPolicy}
+                  onChange={handleChange}
                 />
-        </Grid>
+              }
+              label="I agree to the Privacy Policy."
+            />
+          </Grid>
         <Grid item xs={12}>
           <Button type="submit" fullWidth variant="contained" color="primary">
             Submit

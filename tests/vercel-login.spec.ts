@@ -7,7 +7,7 @@ test("Going to homepage", async ({ page, context }) => {
   const password = process.env.VERCEL_GITHUB_PASSWORD;
 
   await page.goto(
-    "https://beacon-prep-hsrhl4y70-samirdewans-projects.vercel.app/"
+    "https://beacon-prep-gnr93hbkv-samirdewans-projects.vercel.app/"
   );
   await expect(page).toHaveTitle(vercelTitle);
   await page.getByText("Github").click();
