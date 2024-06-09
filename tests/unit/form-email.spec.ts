@@ -1,11 +1,6 @@
 import { test, expect } from '@playwright/test';
+import FormFieldCheck from './utils/form-field-check';
 
 test('test error handling of email', async ({page}) => {
-    await page.goto(
-        "https://beacon-prep-gnr93hbkv-samirdewans-projects.vercel.app/"
-    );
-
-    await expect(page).toHaveTitle("Beacon Prep");
-    await page.fill('#email', 'a@');
-    
+    await FormFieldCheck(page, '#email', 'abcdef', '#email-helper-text', 'valid email address');
 })
