@@ -1,5 +1,3 @@
-"use server";
-
 import { NextApiRequest, NextApiResponse } from "next";
 import { getDonations, postDonation } from "@/server/queries";
 

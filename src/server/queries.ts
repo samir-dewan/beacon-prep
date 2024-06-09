@@ -1,5 +1,3 @@
-"use server";
-
 import { db } from "./db";
 import { donations } from "./db/schema";
 
