@@ -43,7 +43,7 @@ export default function Form() {
     emailPattern.test(e.target.value) ? setEmailValid(true) : setEmailValid(false)
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: any) => {
     const { name, type, value, checked } = e.target;
     setFormData((prevFormData) => ({
       ...prevFormData,
