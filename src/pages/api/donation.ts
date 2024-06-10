@@ -1,10 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getDonations } from "@/server/queries";
+import { db } from '@/server/db';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method == "GET") {
         try {
-            const donationRecords = await getDonations();
+            const donationRecords = await db.query.donations.findFirst;
             res.status(200).json({ success: true, data: donationRecords});
         } catch (error) {
             res.status(400).json({ success: false, message: 'Internal Server Error'});

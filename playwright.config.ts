@@ -1,8 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 import { PlaywrightTestConfig } from '@playwright/test';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 export default defineConfig({
   testDir: './tests',
@@ -19,7 +16,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "https://beacon-prep-hsrhl4y70-samirdewans-projects.vercel.app/",
+    baseURL: "https://beacon-prep-git-master-samirdewans-projects.vercel.app",
     storageState: "auth.json",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
