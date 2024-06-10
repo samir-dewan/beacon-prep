@@ -1,14 +1,10 @@
 import { defineConfig } from "drizzle-kit";
 
-import dotenv from "dotenv";
-
-dotenv.config();
-
 export default defineConfig ({
   dialect: "postgresql",
   out: "./drizzle",
   schema: "./src/server/db/schema.ts",
   dbCredentials: {
-    url: process.env.POSTGRES_URL!
+    url: "postgres://default:faEqwo0K1yBn@ep-icy-bush-a2qcv8r7-pooler.eu-central-1.aws.neon.tech:5432/verceldb?sslmode=require"
   },
 })
