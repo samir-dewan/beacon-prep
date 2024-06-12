@@ -83,7 +83,7 @@ export default function Form() {
         Donate Here
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
+        <Grid item xs>
           <TextField
             fullWidth
             error = {(touched.username || !validPost) && formData.username.length < 3}
@@ -97,7 +97,7 @@ export default function Form() {
             variant="outlined"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs>
           <TextField
             fullWidth
             error={(touched.email || !validPost) && !emailValid}
@@ -113,7 +113,7 @@ export default function Form() {
             variant="outlined"
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs>
         <TextField
             fullWidth
             InputProps={{

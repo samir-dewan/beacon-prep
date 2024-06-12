@@ -4,7 +4,7 @@ const username = "Samir Dewan";
 const email = "samirdewan1995@gmail.com";
 const donation = "20";
 
-test("Test out name in form", async ({ page }) => {
+test("E2E Donation w/ performance test", async ({ page }) => {
 
   const session = await page.context().newCDPSession(page)
 
@@ -24,7 +24,6 @@ test("Test out name in form", async ({ page }) => {
   console.log("=============CDP Performance Metrics===============")
   let performanceMetrics = await session.send("Performance.getMetrics")
   console.log(performanceMetrics.metrics)
-
 
   const response = await page.request.get('http://localhost:3000/api/donation');
   const responseBody = await response.json();
